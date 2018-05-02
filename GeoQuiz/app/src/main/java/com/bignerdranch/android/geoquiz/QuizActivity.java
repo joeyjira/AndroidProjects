@@ -86,7 +86,6 @@ public class QuizActivity extends AppCompatActivity {
         });
 
         mScoreTracker = (TextView) findViewById(R.id.score_tracker);
-//        Log.e(TAG, mScoreTracker.toString());
 
         updateQuestion();
     }
@@ -155,7 +154,7 @@ public class QuizActivity extends AppCompatActivity {
                     .show();
         }
 
-//        mScoreTracker.setText("Score: ");
+        mScoreTracker.setText("Score: " + score);
 
         mQuestionBank[mCurrentIndex].setAnswered();
     }
