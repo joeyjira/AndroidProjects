@@ -80,7 +80,7 @@ public class QuizActivity extends AppCompatActivity {
         mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public  void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
+                mCurrentIndex =  Math.abs((mCurrentIndex - 1) % mQuestionBank.length);
                 updateQuestion();
             }
         });
