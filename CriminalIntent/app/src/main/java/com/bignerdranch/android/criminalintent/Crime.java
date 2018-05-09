@@ -17,6 +17,7 @@ public class Crime {
     public UUID getId() {
         return mId;
     }
+
     public String getTitle() {
         return mTitle;
     }
