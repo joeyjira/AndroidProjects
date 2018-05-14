@@ -6,11 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.nio.charset.Charset;
 import java.util.List;
 
 public class CrimeListFragment extends Fragment {
@@ -41,6 +44,7 @@ public class CrimeListFragment extends Fragment {
     private class CrimeHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         private Crime mCrime;
+        private CharSequence dateFormat;
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
@@ -57,7 +61,8 @@ public class CrimeListFragment extends Fragment {
         public void bind(Crime crime) {
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
+            CharSequence dateFormat = DateFormat.format("EEEE, MMM d, yyyy", mCrime.getDate());
+            mDateTextView.setText(dateFormat);
         }
 
         @Override
