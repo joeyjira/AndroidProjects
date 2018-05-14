@@ -26,6 +26,8 @@ public class CrimeLab {
             crime.setTitle("Crime #" + i);
             crime.setSolved(i % 2 == 0);
             mCrimes.add(crime);
+            if (i % 3 == 0)
+                crime.setRequirePolice(true);
         }
     }
 
