@@ -19,7 +19,7 @@ public class CrimeFragment extends Fragment {
 
     private static final String ARG_CRIME_ID = "crime_d";
     private static final String DIALOG_DATE = "DialogDate";
-    
+
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
