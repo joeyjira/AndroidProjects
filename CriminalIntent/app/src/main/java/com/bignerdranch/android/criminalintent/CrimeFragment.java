@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,6 +26,7 @@ public class CrimeFragment extends Fragment {
     private static final String DIALOG_DATE = "DialogDate";
 
     private static final int REQUEST_DATE = 0;
+    private static final int REQUEST_TIME = 1;
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -85,12 +88,15 @@ public class CrimeFragment extends Fragment {
         });
 
         mTimeButton = (Button) v.findViewById(R.id.crime_time);
+        updateTime();
         mTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = CrimeFragment.this.getFragmentManager();
                 TimePickerFragment dialog = TimePickerFragment
-                        .newInstance(mCrime.getDate().getTime());
+                        .newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
+                dialog.show(manager, DIALOG_DATE);
             }
         });
 
@@ -122,8 +128,12 @@ public class CrimeFragment extends Fragment {
     }
 
     private void updateDate() {
-        mDateButton.setText(mCrime.getDate().toString());
+        CharSequence dateFormat = DateFormat.format("EEEE, MMMM d, yyyy", mCrime.getDate());
+        mDateButton.setText(dateFormat);
     }
 
-
+    private void updateTime() {
+        CharSequence timeFormat = DateFormat.format("hh : mm a", mCrime.getDate());
+        mTimeButton.setText(timeFormat);
+    }
 }

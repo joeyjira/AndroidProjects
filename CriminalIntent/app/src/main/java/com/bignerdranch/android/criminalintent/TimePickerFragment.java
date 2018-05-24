@@ -3,6 +3,7 @@ package com.bignerdranch.android.criminalintent;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -34,9 +35,15 @@ public class TimePickerFragment extends DialogFragment {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
 
         View v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_time, null);
+
+//        mTimePicker = (TimePicker) v.findViewById(R.id.dialog_time_picker);
+//        mTimePicker.setCurrentHour(hour);
+//        mTimePicker.setCurrentHour(minute);
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
