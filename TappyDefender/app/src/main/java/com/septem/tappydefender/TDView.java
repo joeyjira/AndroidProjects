@@ -8,6 +8,9 @@ public class TDView extends SurfaceView implements Runnable {
     volatile boolean playing;
     Thread gameThread = null;
 
+    // Game objects
+    private PlayerShip player;
+
     public TDView(Context context) {
         super(context);
     }
