@@ -1,5 +1,6 @@
 package com.septem.tappydefender;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = GameActivity.newIntent(getApplicationContext());
+                Intent intent = GameActivity.newIntent(MainActivity.this);
                 startActivity(intent);
                 finish();
             }
