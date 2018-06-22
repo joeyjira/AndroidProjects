@@ -21,7 +21,7 @@ public class GameActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         gameView = new TDView(this);
 
-        // Mkae our gameView the view for the Activity
+        // Make our gameView the view for the Activity
         setContentView(gameView);
     }
 
