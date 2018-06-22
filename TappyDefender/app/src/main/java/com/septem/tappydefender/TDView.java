@@ -40,23 +40,31 @@ public class TDView extends SurfaceView implements Runnable {
     }
 
     private void draw() {
-        // Lock area of memory that's drawn to
-        canvas = ourHolder.lockCanvas();
+        if (ourHolder.getSurface().isValid()) {
+            // Lock area of memory that's drawn to
+            canvas = ourHolder.lockCanvas();
 
-        // Rub out the last frame
-        canvas.drawColor(Color.argb(255, 0, 0, 0));
+            // Rub out the last frame
+            canvas.drawColor(Color.argb(255, 0, 0, 0));
 
-        // Draw the player
-        canvas.drawBitmap(
-                player.getBitmap(),
-                player.getX(),
-                player.getY(),
-                paint
-        );
+            // Draw the player
+            canvas.drawBitmap(
+                    player.getBitmap(),
+                    player.getX(),
+                    player.getY(),
+                    paint
+            );
+
+            ourHolder.unlockCanvasAndPost(canvas);
+        }
     }
 
     private void control() {
+        try {
+            gameThread.sleep(17);
+        } catch (InterruptedException e) {
 
+        }
     }
 
     // Clean up our thread if the game is interrupted or the player quits
