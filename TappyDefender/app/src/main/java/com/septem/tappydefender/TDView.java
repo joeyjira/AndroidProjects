@@ -88,10 +88,10 @@ public class TDView extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction() & event.ACTION_MASK) {
-            case event.ACTION_UP:
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_UP:
                 break;
-            case event.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN:
                 break;
         }
         return true;
