@@ -90,8 +90,10 @@ public class TDView extends SurfaceView implements Runnable {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
+                player.stopBoosting();
                 break;
             case MotionEvent.ACTION_DOWN:
+                player.setBoosting();
                 break;
         }
         return true;
