@@ -7,6 +7,10 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Space;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TDView extends SurfaceView implements Runnable {
 
@@ -19,6 +23,9 @@ public class TDView extends SurfaceView implements Runnable {
     public EnemyShip enemy2;
     public EnemyShip enemy3;
 
+    // Make some random space dust
+    public List<SpaceDust> dustList = new ArrayList<>();
+
 
     private Paint paint;
     private Canvas canvas;
@@ -27,12 +34,21 @@ public class TDView extends SurfaceView implements Runnable {
     public TDView(Context context, int x, int y) {
         super(context);
         ourHolder = getHolder();
+        paint = new Paint();
 
         // Initialize player ship
         player = new PlayerShip(context, x, y);
         enemy1 = new EnemyShip(context, x, y);
         enemy2 = new EnemyShip(context, x, y);
         enemy3 = new EnemyShip(context, x, y);
+
+        int numSpecs = 40;
+
+        for (int i = 0; i < numSpecs; i++) {
+            // Where will the dust spawn?
+            SpaceDust spec = new SpaceDust(x, y);
+            dustList.add(spec);
+        }
     }
 
     @Override
@@ -52,6 +68,10 @@ public class TDView extends SurfaceView implements Runnable {
         enemy1.update(player.getSpeed());
         enemy2.update(player.getSpeed());
         enemy3.update(player.getSpeed());
+
+        for (SpaceDust sd : dustList) {
+            sd.update(player.getSpeed());
+        }
     }
 
     private void draw() {
@@ -61,6 +81,14 @@ public class TDView extends SurfaceView implements Runnable {
 
             // Rub out the last frame
             canvas.drawColor(Color.argb(255, 0, 0, 0));
+
+            // Draw teh space dust
+            paint.setColor(Color.argb(255, 255, 255, 255));
+
+            // Draw the dust from arrayList
+            for (SpaceDust sd : dustList) {
+                canvas.drawPoint(sd.getX(), sd.getY(), paint);
+            }
 
             // Draw the player
             canvas.drawBitmap(
