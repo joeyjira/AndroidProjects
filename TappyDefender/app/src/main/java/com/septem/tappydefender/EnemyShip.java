@@ -44,4 +44,19 @@ public class EnemyShip {
     public int getY() {
         return y;
     }
+
+    public void update(int playerSpeed) {
+
+        // Move to the left
+        x -= playerSpeed;
+        x -= speed;
+
+        // Respawn when off screen
+        if (x < minX - bitmap.getWidth()) {
+            Random generator = new Random();
+            speed = generator.nextInt(10) + 10;
+            x = maxX;
+            y = generator.nextInt(maxY) - bitmap.getHeight();
+        }
+    }
 }

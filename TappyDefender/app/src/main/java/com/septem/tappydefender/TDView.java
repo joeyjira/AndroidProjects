@@ -15,6 +15,11 @@ public class TDView extends SurfaceView implements Runnable {
 
     // Game objects
     private PlayerShip player;
+    public EnemyShip enemy1;
+    public EnemyShip enemy2;
+    public EnemyShip enemy3;
+
+
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder ourHolder;
@@ -25,6 +30,9 @@ public class TDView extends SurfaceView implements Runnable {
 
         // Initialize player ship
         player = new PlayerShip(context, x, y);
+        enemy1 = new EnemyShip(context, x, y);
+        enemy2 = new EnemyShip(context, x, y);
+        enemy3 = new EnemyShip(context, x, y);
     }
 
     @Override
