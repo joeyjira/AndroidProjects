@@ -45,7 +45,13 @@ public class TDView extends SurfaceView implements Runnable {
     }
 
     private void update() {
+        // Update player
         player.update();
+
+        // Update enemy
+        enemy1.update(player.getSpeed());
+        enemy2.update(player.getSpeed());
+        enemy3.update(player.getSpeed());
     }
 
     private void draw() {
@@ -63,6 +69,30 @@ public class TDView extends SurfaceView implements Runnable {
                     player.getY(),
                     paint
             );
+
+            // Draw the enemy
+            canvas.drawBitmap(
+                    enemy1.getBitmap(),
+                    enemy1.getX(),
+                    enemy1.getY(),
+                    paint
+            );
+
+            canvas.drawBitmap(
+                    enemy2.getBitmap(),
+                    enemy2.getX(),
+                    enemy2.getY(),
+                    paint
+            );
+
+            canvas.drawBitmap(
+                    enemy3.getBitmap(),
+                    enemy3.getX(),
+                    enemy3.getY(),
+                    paint
+            );
+
+
 
             ourHolder.unlockCanvasAndPost(canvas);
         }
