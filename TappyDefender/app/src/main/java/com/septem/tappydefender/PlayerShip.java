@@ -3,6 +3,7 @@ package com.septem.tappydefender;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 public class PlayerShip {
     private Bitmap bitmap;
@@ -23,6 +24,9 @@ public class PlayerShip {
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
 
+    // A hit box for collision detection
+    private Rect hitBox;
+
     public PlayerShip(Context context, int screenX, int screenY) {
         x = 50;
         y = 50;
@@ -31,6 +35,9 @@ public class PlayerShip {
         mBoosting = false;
         maxY = screenY - bitmap.getHeight();
         minY = 0;
+
+        // Initialize the hit box
+        hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
     public void update() {
@@ -87,5 +94,9 @@ public class PlayerShip {
 
     public void stopBoosting() {
         mBoosting = false;
+    }
+
+    public Rect getHitbox() {
+        return hitBox;
     }
 }

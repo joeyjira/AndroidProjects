@@ -3,6 +3,7 @@ package com.septem.tappydefender;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 import java.util.Random;
 
@@ -19,6 +20,9 @@ public class EnemyShip {
     private int maxY;
     private int minY;
 
+    // A hit box for collision detection
+    private Rect hitBox;
+
     public EnemyShip(Context context, int screenX, int screenY) {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
         maxX= screenX;
@@ -31,6 +35,9 @@ public class EnemyShip {
 
         x = screenX;
         y = generator.nextInt(maxY) - bitmap.getHeight();
+
+        // Initialize the hit box
+        hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
     public Bitmap getBitmap() {
