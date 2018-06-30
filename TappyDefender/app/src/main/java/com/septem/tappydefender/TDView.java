@@ -73,7 +73,9 @@ public class TDView extends SurfaceView implements Runnable {
                     player.getHitbox(), ship.getHitBox()
             )) {
                 ship.setX(-100);
+                System.out.println("check");
             }
+
         }
 
         // Update player

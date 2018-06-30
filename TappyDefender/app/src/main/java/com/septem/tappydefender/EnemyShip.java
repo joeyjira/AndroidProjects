@@ -62,6 +62,12 @@ public class EnemyShip {
         x -= playerSpeed;
         x -= speed;
 
+        // Refresh hit box location
+        hitBox.left = x;
+        hitBox.top = y;
+        hitBox.right = x + bitmap.getWidth();
+        hitBox.bottom = y + bitmap.getHeight();
+
         // Respawn when off screen
         if (x < minX - bitmap.getWidth()) {
             Random generator = new Random();
@@ -69,6 +75,8 @@ public class EnemyShip {
             x = maxX;
             y = generator.nextInt(maxY) - bitmap.getHeight();
         }
+
+
     }
 
     public Rect getHitBox() {
