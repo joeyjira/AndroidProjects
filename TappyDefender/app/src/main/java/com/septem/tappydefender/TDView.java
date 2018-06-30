@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -19,13 +20,10 @@ public class TDView extends SurfaceView implements Runnable {
 
     // Game objects
     private PlayerShip player;
-    public EnemyShip enemy1;
-    public EnemyShip enemy2;
-    public EnemyShip enemy3;
 
     // Make some random space dust
     public List<SpaceDust> dustList = new ArrayList<>();
-
+    public List<EnemyShip> enemyShips = new ArrayList<>();
 
     private Paint paint;
     private Canvas canvas;
@@ -38,9 +36,11 @@ public class TDView extends SurfaceView implements Runnable {
 
         // Initialize player ship
         player = new PlayerShip(context, x, y);
-        enemy1 = new EnemyShip(context, x, y);
-        enemy2 = new EnemyShip(context, x, y);
-        enemy3 = new EnemyShip(context, x, y);
+
+        // Initialize enemy ships
+        for (int i = 0; i < 3; i++) {
+            enemyShips.add(new EnemyShip(context, x, y));
+        }
 
         int numSpecs = 40;
 
@@ -61,13 +61,28 @@ public class TDView extends SurfaceView implements Runnable {
     }
 
     private void update() {
+        // Collision detection on new positions
+        // Before move because we are testing last frames
+        // position which has just been drawn
+
+        // If you are using images in excess of 100 pixels
+        // wide then increase the -100 value accordingly
+
+        for (EnemyShip ship : enemyShips) {
+            if (Rect.intersects(
+                    player.getHitbox(), ship.getHitBox()
+            )) {
+                ship.setX(-100);
+            }
+        }
+
         // Update player
         player.update();
 
         // Update enemy
-        enemy1.update(player.getSpeed());
-        enemy2.update(player.getSpeed());
-        enemy3.update(player.getSpeed());
+        for (EnemyShip ship : enemyShips) {
+            ship.update(player.getSpeed());
+        }
 
         for (SpaceDust sd : dustList) {
             sd.update(player.getSpeed());
@@ -99,28 +114,14 @@ public class TDView extends SurfaceView implements Runnable {
             );
 
             // Draw the enemy
-            canvas.drawBitmap(
-                    enemy1.getBitmap(),
-                    enemy1.getX(),
-                    enemy1.getY(),
-                    paint
-            );
-
-            canvas.drawBitmap(
-                    enemy2.getBitmap(),
-                    enemy2.getX(),
-                    enemy2.getY(),
-                    paint
-            );
-
-            canvas.drawBitmap(
-                    enemy3.getBitmap(),
-                    enemy3.getX(),
-                    enemy3.getY(),
-                    paint
-            );
-
-
+            for (EnemyShip ship : enemyShips) {
+                canvas.drawBitmap(
+                        ship.getBitmap(),
+                        ship.getX(),
+                        ship.getY(),
+                        paint
+                );
+            }
 
             ourHolder.unlockCanvasAndPost(canvas);
         }

@@ -70,4 +70,8 @@ public class EnemyShip {
             y = generator.nextInt(maxY) - bitmap.getHeight();
         }
     }
+
+    public Rect getHitBox() {
+        return hitBox;
+    }
 }
