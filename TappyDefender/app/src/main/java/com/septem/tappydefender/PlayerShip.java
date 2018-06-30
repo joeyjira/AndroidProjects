@@ -69,6 +69,12 @@ public class PlayerShip {
         if (y > maxY) {
             y = maxY;
         }
+
+        // Refresh hit box location
+        hitBox.left = x;
+        hitBox.top = y;
+        hitBox.right = x + bitmap.getWidth();
+        hitBox.bottom = y + bitmap.getHeight();
     }
 
     // Getters
