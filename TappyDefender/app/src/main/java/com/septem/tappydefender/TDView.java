@@ -8,8 +8,6 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Space;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +26,20 @@ public class TDView extends SurfaceView implements Runnable {
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder ourHolder;
+    private int screenX;
+    private int screenY;
+
+    private float distanceRemaining;
+    private long timeTaken;
+    private long timeStarted;
+    private long fastestTime;
 
     public TDView(Context context, int x, int y) {
         super(context);
         ourHolder = getHolder();
         paint = new Paint();
+        screenX = x;
+        screenY = y;
 
         // Initialize player ship
         player = new PlayerShip(context, x, y);
@@ -123,6 +130,26 @@ public class TDView extends SurfaceView implements Runnable {
                         paint
                 );
             }
+
+            // Draw the hud
+            paint.setTextAlign(Paint.Align.LEFT);
+            paint.setColor(Color.argb(255, 255, 255, 255));
+            paint.setTextSize(25);
+            canvas.drawText("Fastest:" + fastestTime + "s", 10, 20, paint);
+            canvas.drawText("Time:" + timeTaken + "s", screenX / 2, 20, paint);
+            canvas.drawText("Distance:" +
+                    distanceRemaining / 1000 +
+                    " KM", screenX / 3, screenY - 20, paint
+            );
+
+            canvas.drawText("Shield:" +
+                    player.getShieldStrength(), 10, screenY - 20, paint
+            );
+
+            canvas.drawText("Speed:" +
+                    player.getSpeed() * 60 +
+                    " MPS", (screenX / 3) * 2, screenY - 20, paint);
+            );
 
             ourHolder.unlockCanvasAndPost(canvas);
         }
