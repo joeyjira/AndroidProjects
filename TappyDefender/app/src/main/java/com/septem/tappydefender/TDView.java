@@ -148,7 +148,7 @@ public class TDView extends SurfaceView implements Runnable {
 
             canvas.drawText("Speed:" +
                     player.getSpeed() * 60 +
-                    " MPS", (screenX / 3) * 2, screenY - 20, paint);
+                    " MPS", (screenX / 3) * 2, screenY - 20, paint
             );
 
             ourHolder.unlockCanvasAndPost(canvas);

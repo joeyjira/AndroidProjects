@@ -27,6 +27,8 @@ public class PlayerShip {
     // A hit box for collision detection
     private Rect hitBox;
 
+    private int shieldStrength;
+
     public PlayerShip(Context context, int screenX, int screenY) {
         x = 50;
         y = 50;
@@ -35,6 +37,7 @@ public class PlayerShip {
         mBoosting = false;
         maxY = screenY - bitmap.getHeight();
         minY = 0;
+        shieldStrength = 2;
 
         // Initialize the hit box
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
@@ -104,5 +107,9 @@ public class PlayerShip {
 
     public Rect getHitbox() {
         return hitBox;
+    }
+
+    public int getShieldStrength() {
+        return shieldStrength;
     }
 }
