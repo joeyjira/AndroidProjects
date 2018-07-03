@@ -33,9 +33,11 @@ public class TDView extends SurfaceView implements Runnable {
     private long timeTaken;
     private long timeStarted;
     private long fastestTime;
+    private Context context;
 
     public TDView(Context context, int x, int y) {
         super(context);
+        this.context = context;
         ourHolder = getHolder();
         paint = new Paint();
         screenX = x;
