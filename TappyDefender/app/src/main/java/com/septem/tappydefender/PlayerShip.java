@@ -112,4 +112,8 @@ public class PlayerShip {
     public int getShieldStrength() {
         return shieldStrength;
     }
+
+    public void reduceShieldStrength() {
+        shieldStrength--;
+    }
 }
