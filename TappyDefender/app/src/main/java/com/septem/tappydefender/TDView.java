@@ -43,21 +43,30 @@ public class TDView extends SurfaceView implements Runnable {
         screenX = x;
         screenY = y;
 
-        // Initialize player ship
-        player = new PlayerShip(context, x, y);
+        startGame();
+    }
 
-        // Initialize enemy ships
-        for (int i = 0; i < 3; i++) {
-            enemyShips.add(new EnemyShip(context, x, y));
+    private void startGame() {
+        // Initialize game objects
+        player = new PlayerShip(context, screenX, screenY);
+
+        for (EnemyShip ship : enemyShips) {
+            new EnemyShip(context, screenX, screenY);
         }
 
         int numSpecs = 40;
-
         for (int i = 0; i < numSpecs; i++) {
             // Where will the dust spawn?
-            SpaceDust spec = new SpaceDust(x, y);
+            SpaceDust spec = new SpaceDust(screenX, screenY);
             dustList.add(spec);
         }
+
+        // Reset time and distance
+        distanceRemaining = 10000; // 10km
+        timeTaken = 0;
+
+        // Get start time
+        timeStarted = System.currentTimeMillis();
     }
 
     @Override
