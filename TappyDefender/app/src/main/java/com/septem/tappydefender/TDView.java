@@ -35,6 +35,8 @@ public class TDView extends SurfaceView implements Runnable {
     private long fastestTime;
     private Context context;
 
+    private boolean gameEnded;
+
     public TDView(Context context, int x, int y) {
         super(context);
         this.context = context;
@@ -67,6 +69,8 @@ public class TDView extends SurfaceView implements Runnable {
 
         // Get start time
         timeStarted = System.currentTimeMillis();
+
+        gameEnded = false;
     }
 
     @Override
@@ -85,14 +89,24 @@ public class TDView extends SurfaceView implements Runnable {
 
         // If you are using images in excess of 100 pixels
         // wide then increase the -100 value accordingly
+        boolean hitDetected = false;
 
         for (EnemyShip ship : enemyShips) {
             if (Rect.intersects(
                     player.getHitbox(), ship.getHitBox()
             )) {
+                hitDetected = true;
                 ship.setX(-300);
             }
 
+        }
+
+        if (hitDetected) {
+            player.reduceShieldStrength();
+            if (player.getShieldStrength() < 0) {
+                // Game over
+                gameEnded = true;
+            }
         }
 
         // Update player
@@ -105,6 +119,28 @@ public class TDView extends SurfaceView implements Runnable {
 
         for (SpaceDust sd : dustList) {
             sd.update(player.getSpeed());
+        }
+
+        if (!gameEnded) {
+            // Subtract distance to home planet based on current speed
+            distanceRemaining -= player.getSpeed();
+
+            // How long has the player been flying
+            timeTaken = System.currentTimeMillis() - timeStarted;
+        }
+
+        // Completed the game!
+        if (distanceRemaining < 0) {
+            // check for new fastest time
+            if (timeTaken < fastestTime) {
+                fastestTime =timeTaken;
+            }
+
+            // avoid ugly negative numbers in HUD
+            distanceRemaining = 0;
+
+            // Now end the game
+            gameEnded = true;
         }
     }
 
@@ -142,25 +178,44 @@ public class TDView extends SurfaceView implements Runnable {
                 );
             }
 
-            // Draw the hud
-            paint.setTextAlign(Paint.Align.LEFT);
-            paint.setColor(Color.argb(255, 255, 255, 255));
-            paint.setTextSize(25);
-            canvas.drawText("Fastest:" + fastestTime + "s", 10, 20, paint);
-            canvas.drawText("Time:" + timeTaken + "s", screenX / 2, 20, paint);
-            canvas.drawText("Distance:" +
-                    distanceRemaining / 1000 +
-                    " KM", screenX / 3, screenY - 20, paint
-            );
+            if (!gameEnded) {
+                // Draw the hud
+                paint.setTextAlign(Paint.Align.LEFT);
+                paint.setColor(Color.argb(255, 255, 255, 255));
+                paint.setTextSize(25);
+                canvas.drawText("Fastest:" + fastestTime + "s", 10, 20, paint);
+                canvas.drawText("Time:" + timeTaken + "s", screenX / 2, 20, paint);
+                canvas.drawText("Distance:" +
+                        distanceRemaining / 1000 +
+                        " KM", screenX / 3, screenY - 20, paint
+                );
 
-            canvas.drawText("Shield:" +
-                    player.getShieldStrength(), 10, screenY - 20, paint
-            );
+                canvas.drawText("Shield:" +
+                        player.getShieldStrength(), 10, screenY - 20, paint
+                );
 
-            canvas.drawText("Speed:" +
-                    player.getSpeed() * 60 +
-                    " MPS", (screenX / 3) * 2, screenY - 20, paint
-            );
+                canvas.drawText("Speed:" +
+                        player.getSpeed() * 60 +
+                        " MPS", (screenX / 3) * 2, screenY - 20, paint
+                );
+            } else {
+                paint.setTextSize(80);
+                paint.setTextAlign(Paint.Align.CENTER);
+                canvas.drawText("Game Over", screenX / 2, 100, paint);
+                paint.setTextSize(25);
+                canvas.drawText("Fastest:" +
+                    fastestTime + "s", screenX / 2, 160, paint);
+
+                canvas.drawText("Time:" + timeTaken +
+                    "s", screenX / 2, 200, paint);
+
+                canvas.drawText("Distance remaining:" +
+                        distanceRemaining / 1000 + " KM", screenX / 2, 240, paint);
+
+                paint.setTextSize(80);
+                canvas.drawText("Tap to replay!", screenX / 2, 350, paint);
+            }
+
 
             ourHolder.unlockCanvasAndPost(canvas);
         }
