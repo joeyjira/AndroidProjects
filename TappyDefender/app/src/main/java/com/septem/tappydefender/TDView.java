@@ -52,10 +52,13 @@ public class TDView extends SurfaceView implements Runnable {
         // Initialize game objects
         player = new PlayerShip(context, screenX, screenY);
 
-        for (EnemyShip ship : enemyShips) {
-            new EnemyShip(context, screenX, screenY);
+        enemyShips.clear();
+        int numEnemies = 3;
+        for (int i = 0; i < numEnemies; i++) {
+            enemyShips.add(new EnemyShip(context, screenX, screenY));
         }
 
+        dustList.clear();
         int numSpecs = 40;
         for (int i = 0; i < numSpecs; i++) {
             // Where will the dust spawn?
@@ -133,7 +136,7 @@ public class TDView extends SurfaceView implements Runnable {
         if (distanceRemaining < 0) {
             // check for new fastest time
             if (timeTaken < fastestTime) {
-                fastestTime =timeTaken;
+                fastestTime = timeTaken;
             }
 
             // avoid ugly negative numbers in HUD
