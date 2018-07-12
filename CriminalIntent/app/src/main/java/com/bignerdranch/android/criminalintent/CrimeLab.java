@@ -75,7 +75,7 @@ public class CrimeLab {
         mDatabase.insert(CrimeTable.NAME, null, values);
     }
 
-    public void removeCrime(Crime c) {
+    public void deleteCrime(Crime c) {
         mDatabase.delete(
                 CrimeTable.NAME,
                 CrimeTable.Cols.UUID + " = ?",

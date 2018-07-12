@@ -122,7 +122,7 @@ public class CrimeFragment extends Fragment {
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrimeLab.get(getActivity()).removeCrime(mCrime);
+                CrimeLab.get(getActivity()).deleteCrime(mCrime);
                 getActivity().finish();
             }
         });
