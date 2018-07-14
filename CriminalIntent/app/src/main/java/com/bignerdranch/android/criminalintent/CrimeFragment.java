@@ -165,7 +165,7 @@ public class CrimeFragment extends Fragment {
         PackageManager packageManager = getActivity().getPackageManager();
         if (packageManager.resolveActivity(pickContact,
                 PackageManager.MATCH_DEFAULT_ONLY) == null) {
-            mSuspectButton.setVisibility(View.INVISIBLE);
+            mSuspectButton.setVisibility(View.GONE);
             mSuspectButton.setEnabled(false);
         }
 
